@@ -1,9 +1,9 @@
 # pt-rtd
 
-[![Latest Version](https://img.shields.io/crates/v/pt-rtd.svg)][`pt-rtd`]
-[![Documentation](https://docs.rs/pt-rtd/badge.svg)][`pt-rtd`/docs]
-[![License](https://img.shields.io/crates/l/pt-rtd.svg)][`pt-rtd`/license]
-[![Dependency Status](https://deps.rs/repo/github/thecodechemist99/pt-rtd/status.svg)][`pt-rtd`/dep_status]
+![Latest Version](https://img.shields.io/crates/v/pt-rtd.svg)]
+![Documentation](https://docs.rs/pt-rtd/badge.svg)
+![License](https://img.shields.io/crates/l/pt-rtd.svg)
+![Dependency Status](https://deps.rs/repo/github/thecodechemist99/pt-rtd/status.svg)
 
 ## Usage
 
@@ -15,7 +15,7 @@ pt-rtd = "0.1"
 ```
 
 ## Examples
-
+Conversion of temperature and resistance values:
 ```rust,ignore
 use pt_rtd::{
     self as rtd,

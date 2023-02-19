@@ -90,7 +90,7 @@ pub fn calc_t(r: f32, r_0: RTDType) -> Result<f32, Error> {
                 _ => Err(Error::OutOfBounds),
             }
         },
-        Err(e) => Err(Error::NonexistentType),
+        Err(_) => Err(Error::NonexistentType),
     }
 }
 

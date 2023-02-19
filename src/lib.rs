@@ -107,7 +107,7 @@ pub fn calc_r(t: f32, r_0: RTDType) -> Result<f32, Error> {
     }
 }
 
-/// Convert digital value for n bit ADC to resistance.
+/// Convert digital value of relative measurement for n bit ADC to resistance.
 #[allow(dead_code)]
 pub fn conv_d_val_to_r(d_val: u32, r_ref: u32, res: ADCRes, pga_gain: u32) -> Result<f32, Error> {
     let res = res as u32;
@@ -131,4 +131,25 @@ fn poly_correction(r: f32, poly: Polynomial) -> f32 {
 pub enum Error {
     OutOfBounds,
     NonexistentType,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn resistance_calculation() {
+        let t = 0.0;
+        
+        let r = calc_r(t, RTDType::PT100).unwrap();
+        assert_eq!(r, 100_f32);
+    }
+
+    #[test]
+    fn temperature_calculation() {
+        let r = 100.0;
+
+        let t = calc_t(r, RTDType::PT100).unwrap();
+        assert_eq!(t, 0_f32);
+    }
 }

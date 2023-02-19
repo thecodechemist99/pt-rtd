@@ -6,7 +6,7 @@ categories = ["embedded", "no-std"]
 keywords = ["pt100", "pt1000", "rtd", "thermometer"]
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/thecodechemist99/pt-rtd"
 

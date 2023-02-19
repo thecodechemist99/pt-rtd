@@ -1,6 +1,6 @@
 # pt-rtd
 
-![Latest Version](https://img.shields.io/crates/v/pt-rtd.svg)]
+![Latest Version](https://img.shields.io/crates/v/pt-rtd.svg)
 ![Documentation](https://docs.rs/pt-rtd/badge.svg)
 ![License](https://img.shields.io/crates/l/pt-rtd.svg)
 ![Dependency Status](https://deps.rs/repo/github/thecodechemist99/pt-rtd/status.svg)

@@ -1,10 +1,16 @@
 #![no_std]
 
 //! Calculation methods for platinum type RTD temperature sensors.
+//! 
 //! All temperature related calculations are based on DIN EN 60751:2009-05.
 //! The polynomials for PT100 and PT1000 for temperature calculation at below 0°C are from
-//! https://github.com/ulikoehler/UliEngineering/blob/master/UliEngineering/Physics/RTD.py. See also
-//! https://techoverflow.net/2016/01/02/accurate-calculation-of-pt100pt1000-temperature-from-resistance/.
+//! https://github.com/ulikoehler/UliEngineering/blob/master/UliEngineering/Physics/RTD.py. 
+//! 
+//! See also https://techoverflow.net/2016/01/02/accurate-calculation-of-pt100pt1000-temperature-from-resistance/
+//! for reference.
+//! 
+//! The correctional polynomials for PT200 and PT500 are not yet implemented, temperature 
+//! calculations for these below 0°C will be wrong.
 
 use libm::{
     powf,
@@ -56,6 +62,7 @@ const B: f32 = -5.7750e-7;
 const C: f32 = -4.1830e-12;
 
 /// Calculate temperature of RTD from resistance value.
+/// 
 /// Allowed temperature range: -200–850°C.
 #[allow(dead_code)]
 pub fn calc_t(r: f32, r_0: RTDType) -> Result<f32, Error> {
@@ -95,8 +102,9 @@ pub fn calc_t(r: f32, r_0: RTDType) -> Result<f32, Error> {
 }
 
 /// Calculate resistance of RTD for a specified temperature.
-/// Allowed temperature range: -200–850°C.
-/// For temperatures below 0°C a small error (58.6uK max. over the full range) is introduced due to the use of polynomial approximation.
+/// 
+/// Allowed temperature range: -200–850°C. For temperatures below 0°C a small error (58.6uK max.
+/// over the full range) is introduced due to the use of polynomial approximation.
 #[allow(dead_code)]
 pub fn calc_r(t: f32, r_0: RTDType) -> Result<f32, Error> {
     let r_0 = r_0 as i32;

@@ -66,8 +66,8 @@ const C: f32 = -4.1830e-12;
 /// Allowed temperature range: -200–850°C.
 #[allow(dead_code)]
 pub fn calc_t(r: f32, r_0: RTDType) -> Result<f32, Error> {
-    let r_min = floorf(calc_r(-200_f32, r_0).unwrap()) as i32;
-    let r_max = floorf(calc_r(850_f32, r_0).unwrap()) as i32;
+    let r_min = floorf(calc_r(-200_f32, r_0)?) as i32;
+    let r_max = floorf(calc_r(850_f32, r_0)?) as i32;
 
     // set correctional polynomial for t < 0°C
     let corr_poly: Result<[f32; 6], Error> = match r_0 {
@@ -79,21 +79,15 @@ pub fn calc_t(r: f32, r_0: RTDType) -> Result<f32, Error> {
 
     // cast r_0 to f32 for calculation
     let r_0 = r_0 as i32 as f32;
-    let mut t = ( -r_0 * A + sqrtf( powf(r_0, 2_f32) * powf(A, 2_f32) - 4_f32 * r_0 * B * ( r_0 - r as f32 ) ) ) / ( 2_f32 * r_0 as f32 * B );
+    let t = ( -r_0 * A + sqrtf( powf(r_0, 2_f32) * powf(A, 2_f32) - 4_f32 * r_0 * B * ( r_0 - r as f32 ) ) ) / ( 2_f32 * r_0 as f32 * B );
 
     match corr_poly {
         Ok(poly) => {
             match (floorf(r) as i32, r_0 as i32) {
-                (r, r_0) if r_0 <= r && r <= r_max => {
-                    // t >= 0°C
-                    Ok(t)
-                },
-                (r, r_0) if r_min <= r && r < r_0 => {
-                    // t < 0°C
-                    // Apply the correctional polynomial
-                    t += poly_correction(r as f32, poly);
-                    Ok(t)
-                },
+                (r, r_0) if r_0 <= r && r <= r_max => Ok(t), // t >= 0°C
+                (r, r_0) if r_min <= r && r < r_0 => Ok(
+                    t + poly_correction(r as f32, poly) // t < 0°C, apply the correctional polynomial
+                ), 
                 _ => Err(Error::OutOfBounds),
             }
         },
